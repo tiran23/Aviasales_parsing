@@ -1,0 +1,109 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from bs4 import BeautifulSoup
+
+import time
+import csv
+
+for i in range(0, 1):
+    url = 'https://www.aviasales.ru/search/MOW3009HAN1?request_source=search_form&payment_method=all'
+    options = webdriver.FirefoxOptions()
+    options.set_preference('general.useragent.override', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0')
+
+    driver = webdriver.Firefox(options=options)
+    driver.get(url)
+    driver.implicitly_wait(30)
+
+    driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[1]/div/div[2]/button/span').click()
+    click = driver.find_element(By.CLASS_NAME, 'calendar-matrix-control__next-control')
+    click.click()
+    time.sleep(1)
+    click.click()
+    time.sleep(1)
+    click.click()
+    time.sleep(1)
+    click.click()
+    driver.implicitly_wait(5)
+
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+    data = []
+
+    datesХ = soup.find_all('div', class_='calendar-matrix__date')
+    pricesХ = soup.find_all('span', class_='price_85d2b9c')
+    with open('aviasales.csv', 'a', encoding='UTF8', newline='') as file:
+        recorder = csv.writer(file, delimiter=',')
+        
+        for j in range(7):
+            recorder.writerow((
+                datesХ[j].text,
+                pricesХ[j].text.replace(',', ' ')
+            ))
+
+    for j in range(0, 1):
+        url = 'https://www.aviasales.ru/search/MOW3009BEG1?request_source=search_form&payment_method=all'
+        options = webdriver.FirefoxOptions()
+        options.set_preference('general.useragent.override', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0')
+
+        driver = webdriver.Firefox(options=options)
+        driver.get(url)
+        driver.implicitly_wait(30)
+
+        driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[1]/div/div[2]/button/span').click()
+        click = driver.find_element(By.CLASS_NAME, 'calendar-matrix-control__next-control')
+        click.click()
+        time.sleep(1)
+        click.click()
+        time.sleep(1)
+        click.click()
+        time.sleep(1)
+        click.click()
+        driver.implicitly_wait(5)
+
+        soup = BeautifulSoup(driver.page_source, 'lxml')
+        data = []
+
+        datesБ = soup.find_all('div', class_='calendar-matrix__date')
+        pricesБ = soup.find_all('span', class_='price_85d2b9c')
+        with open('aviasales.csv', 'a', encoding='UTF8', newline='') as file:
+            recorder = csv.writer(file, delimiter=',')
+            for j in range(7):
+                recorder.writerow((
+                    datesБ[j].text,
+                    pricesБ[j].text.replace(',', ' ')
+                ))
+
+        for n in range(0, 1):
+            url = 'https://www.aviasales.ru/search/MOW3009NQZ1?request_source=search_form&expected_price_value=31712&expected_price_currency=rub&expected_price_source=calendar&payment_method=all'
+            options = webdriver.FirefoxOptions()
+            options.set_preference('general.useragent.override', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0')
+
+            driver = webdriver.Firefox(options=options)
+            driver.get(url)
+            driver.implicitly_wait(30)
+
+            driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[1]/div/div[2]/button/span').click()
+            click = driver.find_element(By.CLASS_NAME, 'calendar-matrix-control__next-control')
+            click.click()
+            time.sleep(1)
+            click.click()
+            time.sleep(1)
+            click.click()
+            time.sleep(1)
+            click.click()
+            driver.implicitly_wait(5)
+
+            soup = BeautifulSoup(driver.page_source, 'lxml')
+            data = []
+
+            datesА = soup.find_all('div', class_='calendar-matrix__date')
+            pricesА = soup.find_all('span', class_='price_85d2b9c')
+
+            with open('aviasales.csv', 'a', encoding='UTF8', newline='') as file:
+                recorder = csv.writer(file, delimiter=',')
+                for j in range(7):
+                    recorder.writerow((
+                        datesА[j].text,
+                        pricesА[j].text.replace(',', ' ')
+                    ))
+
